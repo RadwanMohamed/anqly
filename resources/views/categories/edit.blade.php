@@ -31,7 +31,7 @@
                             <span class="input-group-addon">
                                <i class="fa fa-phone"></i>
                             </span>
-                            <textarea type="text" name="description" class="form-control"  >{{$category->description}} </textarea></div>
+                            <textarea type="text" name="description" class="form-control"  >{{$category->desc}} </textarea></div>
                     </div>
 
 

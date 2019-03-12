@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\User;
 
+use App\Driver;
 use App\Http\Controllers\ApiController;
 use App\User;
 

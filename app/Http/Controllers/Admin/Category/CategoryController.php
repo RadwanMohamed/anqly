@@ -53,9 +53,8 @@ class CategoryController extends Controller
 
         $category = Category::create([
             'name' => $request->name,
-            'description' => $request->description,
+            'desc' => $request->description,
         ]);
-
         return redirect(route('categories.index'));
     }
 
@@ -90,7 +89,7 @@ class CategoryController extends Controller
 
 
         $category->name =$request->name;
-        $category->description =$request->description;
+        $category->desc =$request->description;
         if ($category->isClean())
             return redirect()->back()->with('status','يجب ادخال قيم جديدة لاتمام عملية التعديل');
         $category->save();

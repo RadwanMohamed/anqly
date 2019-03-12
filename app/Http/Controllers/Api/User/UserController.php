@@ -30,7 +30,7 @@ class UserController extends ApiController
         $rules = [
             'name' => 'required|string|max:190',
             'email' => 'required|email',
-            'phone' => 'required|string',
+            'phone' => 'required|string|unique:users',
             'password' => 'required|string|confirmed',
             'role' => 'required|string|in:' . User::CLIENT . ',' . User::DRIVER,
             'class' => 'nullable|string',
@@ -39,25 +39,28 @@ class UserController extends ApiController
         ];
         $this->validate($request, $rules);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => bcrypt($request->password),
-            'api_token' => User::generateToken(),
-            'role' => $request->role,
-            'status' => User::ON,
-            'class' => $request->class,
-            'city' => $request->city,
+//        dd($request->all());
+        $user = new User();
+        $user->name   =  $request->name ;
+        $user->email   =  $request->email ;
+        $user->phone   =  $request->phone ;
+        $user->password   =  bcrypt($request->password) ;
+        $user->role   =  $request->role ;
+        $user->balance   =  0 ;
+        $user->status   =  User::ON ;
+        $user->api_token   =  User::generateToken() ;
+        $user->category_id   =  2;
+        $user->city   = $request->city;
+        $user->save();
 
-        ]);
         if ($request->role == User::DRIVER) {
 
+            $user->category_id  = $request->category_id;
             $application_photo = new Photo();
             $application_photo->name = 'صورة الاستمارة';
             $application_photo->path = $request->app->store('');
             $application_photo->imageable_id = $user->id;
-            $application_photo->imageable_id = 'App\User';
+            $application_photo->imageable_type = 'App\User';
             $application_photo->save();
 
 
@@ -65,7 +68,7 @@ class UserController extends ApiController
             $id_photo->name = 'صورة البطاقة';
             $id_photo->path = $request->id->store('');
             $id_photo->imageable_id = $user->id;
-            $id_photo->imageable_id = 'App\User';
+            $id_photo->imageable_type = 'App\User';
             $id_photo->save();
 
 
@@ -73,7 +76,7 @@ class UserController extends ApiController
             $driveid->name = 'صورة رخصة السواقة';
             $driveid->path = $request->drive->store('');
             $driveid->imageable_id = $user->id;
-            $driveid->imageable_id = 'App\User';
+            $driveid->imageable_type = 'App\User';
             $driveid->save();
 
         }

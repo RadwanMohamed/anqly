@@ -15,8 +15,8 @@ class OrderController extends ApiController
      */
     public function index()
     {
-        $orders = Order::with('client')->get();
-        return $this->showAll($orders);
+        $orders = Order::where('status','=',Order::NEW)->get();
+        return $this->showAll('orders',$orders);
     }
 
 
@@ -31,15 +31,14 @@ class OrderController extends ApiController
     {
         $rules = [
             'name' => 'required|string|max:190',
-            'from' => 'required|email',
+            'from' => 'required|string',
             'to' => 'required|string',
-            'datetime' => 'required|date',
+            'datetime' => 'required|date_format:Y-m-d H:i:s',
             'desc' => 'required|string',
             'value' => 'required|string',
         ];
         $this->validate($request, $rules);
-
-
+//        dd($request->all());
         $order = Order::create([
             'name' => $request->name,
             'from' => $request->from,
@@ -62,8 +61,9 @@ class OrderController extends ApiController
      */
     public function show(Order $order)
     {
-        $order  = $order->with('client')->get();
-        return $this->showOne('order',$order);
+        $user = $order->whereHas('client')->with('client')->get();
+
+        return $this->showAll('order',$user);
     }
 
     /**

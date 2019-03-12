@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin\User;
 
-use App\Http\Requests\UserRequest;
+//use App\Http\Requests\UserRequest;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use function Sodium\compare;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Category;
 class UserController extends Controller
 {
@@ -18,16 +19,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::select('*');
-        foreach (array_except($request->all(),'page') as $key => $value)
-        {
-            if ($key == '')
-                continue;
-            if ($key == 'name')
-                $users = $users->where($key,'like','%'.$value.'%');
-            $users = $users->where($key,'=',$value);
-        }
-        $users = $users->paginate(50);
+        $users = User::all();
 
         return view('users.index',compact('users'));
     }
@@ -39,7 +31,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $categories = $this->objectsToArray(Category::all());
+        $categories = Category::all();
         return view('users.create',compact('categories'));
     }
 
@@ -64,6 +56,24 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+
+        $user = new User();
+        $user->name   =  $request->name ;
+        $user->email   =  $request->email ;
+        $user->phone   =  $request->phone ;
+        $user->password   =  bcrypt($request->password) ;
+        $user->role   =  $request->role ;
+        $user->balance   =  $request->balance ;
+        $user->status   =  User::ON ;
+        $user->api_token   =  null ;
+         $user->category_id   =  isset($request->category_id)? $request->category_id : null;
+        $user->city   = $request->city;
+
+         $user->save();
+
+/*
+
+
         $user = User::create([
             'name'     => $request->name,
             'email'    => $request->email,
@@ -71,12 +81,13 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
             'api_token'=> null,
             'role'     => $request->role,
-            'balance'     => $request->balance,
+            'balance'  => $request->balance,
             'status'   => User::ON,
             'category_id'  => isset($request->category_id)? $request->category_id : null,
             'city'     => $request->city,
         ]);
-        return redirect('users.index',compact('user'));
+*/
+         return redirect(route('users.index'));
     }
 
     /**
@@ -133,7 +144,7 @@ class UserController extends Controller
             return redirect()->back()->with('status','عفوا يجب ادخال قيم جديدة لاتمام عملية التحديث');
 
         $user->save();
-        return redirect('users.show',compact('user'));
+        return redirect(route('users.index'));
 
     }
 

@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
-
+    protected $table = 'users';
     const ON     = '1';
     const OFF    = '0';
 
@@ -52,8 +52,8 @@ class User extends Authenticatable
     {
         return $this->morphMany('App\Photo', 'imageable');
     }
-    public function orders()
+    public  function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany('App\Order','driver_id');
     }
 }

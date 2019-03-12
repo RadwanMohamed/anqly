@@ -7,7 +7,7 @@ Route::get('adminpanel/login',"Admin\Auth\LoginController@showLoginForm");
 
 Route::post('adminpanel/login',"Admin\Auth\LoginController@login");
 
-//Route::group(['middleware'=>['admin','web']],function () {
+Route::group(['middleware'=>['admin','web']],function () {
 
     Route::post('/adminpanel/users/{user}/block', 'Admin\User\UserController@block');
     Route::post('/adminpanel/users/{user}/activate', 'Admin\User\UserController@activate');
@@ -38,4 +38,4 @@ Route::post('adminpanel/login',"Admin\Auth\LoginController@login");
 
     Route::get('/home', 'HomeController@index')->name('home');
 
-//});
+});

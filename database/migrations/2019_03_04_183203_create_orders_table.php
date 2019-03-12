@@ -24,7 +24,7 @@ class CreateOrdersTable extends Migration
             $table->string('status')->default(\App\Order::NEW);
             $table->integer('client_id')->unsigned();
             $table->integer('category_id')->unsigned();
-            $table->integer('driver_id')->unsigned();
+            $table->integer('driver_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('client_id')->references('id')->on('users');

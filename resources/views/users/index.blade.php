@@ -25,7 +25,6 @@
                 <th class="numeric"> الصلاحية</th>
                 <th class="numeric"> حالة المستخدم</th>
                 <th class="numeric"> المدينة</th>
-                <th class="numeric"> العنوان</th>
                 <th> حظر</th>
                 <th> تعديل</th>
                 <th> حذف</th>
@@ -46,7 +45,6 @@
                     </td>
                     <td> {{status($user->status)}} </td>
                     <td> {{$user->city}} </td>
-                    <td> {{$user->address}} </td>
                     <td>
                         @if($user->status== \App\User::OFF)
                             <form action="{{url('/adminpanel/users/'.$user->id.'/activate')}}" method="post">
@@ -82,5 +80,6 @@
 
             </tbody>
         </table>
+
     </div>
 @endsection

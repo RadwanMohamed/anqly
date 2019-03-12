@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-/*
+
 Route::group(['middleware'=>['api']],function (){
 
 
@@ -38,18 +38,7 @@ Route::group(['middleware'=>['api']],function (){
         Route::resource('/categories.products','Api\Category\CategoryProductController')->only(['index']);
         //End categories routes
 
-
-        //start product routes
-        Route::resource('/products','Api\Product\ProductController')->only(['index','show']);
-        //end  product routes
-
-
-
-        //start requests routes
-        Route::post('/orders/request','Api\Request\RequestController@request');
-        Route::resource('/requests','Api\Request\RequestController')->only(['index','show','store']);
-        Route::resource('/requests.orders','Api\Request\RequestOrderController')->only(['index']);
-        //end  requests routes
+        Route::post('/users/{user}/charge','Api\Charge\ChargeController@store');
 
 
         //start orders routes
@@ -67,4 +56,4 @@ Route::group(['middleware'=>['api']],function (){
 
 
 });
-*/
+

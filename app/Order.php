@@ -9,7 +9,7 @@ class Order extends Model
     const  NEW = 'new';
     const  BOOKED = 'booked';
     const  EXPIRED = 'expired';
-    protected $fillable = ['name', 'from', 'to', 'datetime', 'desc', 'value','client_id','category_id'];
+    protected $fillable = ['name', 'from', 'to', 'datetime', 'desc', 'value','client_id','category_id','driver_id'];
 
     public function client()
     {

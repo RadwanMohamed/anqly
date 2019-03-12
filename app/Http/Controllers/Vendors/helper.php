@@ -16,7 +16,7 @@ function role($key)
 }
 function codeStatus($key)
 {
-    return ($key == \App\Promotion::ACTIVATED)? 'مفعل' :  'منتهى';
+    return ($key == \App\Charge::ACTIVATED)? 'مفعل' :  'منتهى';
 }
 
 function orderStatus($key)

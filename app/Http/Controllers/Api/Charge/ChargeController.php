@@ -37,7 +37,7 @@ class ChargeController extends ApiController
      */
     public function store(Request $request,User $user)
     {
-        $code = Charge::where('code','=',$request->code)->get();
+        $code = Charge::where('code','=',$request->code)->first();
         $user->balance += $code->value;
         return $this->showOne('user',$user,200);
 

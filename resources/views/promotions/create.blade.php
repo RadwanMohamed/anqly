@@ -39,7 +39,7 @@
                                <i class="fa fa-pencil"></i>
                             </span>
                             <input type="text" name="code" class="form-control"
-                                   value="{{\App\Promotion::generatePromoCode()}}"></div>
+                                   value="{{\App\Charge::generateChargeCode()}}"></div>
                         @if ($errors->has('name'))
                             <span class="help-block " role="alert">
                                         <strong class="error">{{ $errors->first('code') }}</strong>

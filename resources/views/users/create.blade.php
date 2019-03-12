@@ -137,27 +137,26 @@
                     @endif
 
                 </div>
-                {{--<div class="form-group car-class">--}}
-                        {{--<label> فئة السيارة  </label>--}}
-                        {{--<div class="input-group">--}}
-                            {{--<span class="input-group-addon">--}}
-                               {{--<i class="fa fa-location-arrow"></i>--}}
-                            {{--</span>--}}
-                            {{--<select name="category_id" class="form-control">--}}
-                                {{--<option value="0">test  </option>--}}
+                <div class="form-group car-class">
+                        <label> فئة السيارة  </label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                               <i class="fa fa-location-arrow"></i>
+                            </span>
+                            <select name="category_id" class="form-control">
 
-                            {{--@foreach($categories as $key=>$category)--}}
-                                {{--<option value="{{$key}}"> {{$category[$key]}}  </option>--}}
-                                {{--@endforeach--}}
-                            {{--</select>--}}
-                        {{--</div>--}}
-                    {{--@if ($errors->has('category_id'))--}}
-                        {{--<span class="invalid-feedback " role="alert">--}}
-                                        {{--<strong class="error">{{ $errors->first('category_id') }}</strong>--}}
-                                    {{--</span>--}}
-                    {{--@endif--}}
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}"> {{$category->name}}  </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @if ($errors->has('category_id'))
+                        <span class="invalid-feedback " role="alert">
+                                        <strong class="error">{{ $errors->first('category_id') }}</strong>
+                                    </span>
+                    @endif
 
-                {{--</div>--}}
+                </div>
 
 
                 <div class="form-actions">

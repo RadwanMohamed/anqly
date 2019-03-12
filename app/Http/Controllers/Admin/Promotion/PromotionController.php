@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Charge;
+namespace App\Http\Controllers\Admin\Promotion;
 
 use App\Charge;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
-class ChargeController extends Controller
+class PromotionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -56,10 +56,11 @@ class ChargeController extends Controller
             'name'=>$request->name,
             'code'=>$request->code,
             'count'=>$request->count,
+            'status'=>Charge::ACTIVATED,
             'value'=>$request->value,
         ]);
 
-        return redirect(route('promotions.index'))->with("status",'تمت اضافة الكود بنجاح');
+        return redirect(route('charge.index'))->with("status",'تمت اضافة الكود بنجاح');
 
     }
 
@@ -73,24 +74,27 @@ class ChargeController extends Controller
     public function destroy($id)
     {
         Charge::where('id',$id)->delete();
-        return redirect(route('promotions.index'));
+        return redirect(route('charge.index'))->with('status','تم تفعيل الكود بنجاح');
     }
 
-    public  function activate (Charge $Charge)
+    public  function activate ($id)
     {
+        $Charge = Charge::findOrFail($id);
         if ($Charge->status == Charge::ACTIVATED)
              return redirect()->back()->with('status','عفوا هذا الكود مفعل بالفعل');
         $Charge->status = Charge::ACTIVATED;
         $Charge->save();
-        return redirect(route('promotions.index'))->with('status','تم تفعيل الكود بنجاح');
+        return redirect(route('charge.index'))->with('status','تم تفعيل الكود بنجاح');
     }
-    public  function deactivate (Charge $Charge)
+    public  function deactivate ($id)
     {
+        $Charge = Charge::findOrFail($id);
+
         if ($Charge->status == Charge::EXPIRED)
              return redirect()->back()->with('status','عفوا هذا الكود غير مفعل بالفعل');
         $Charge->status = Charge::EXPIRED;
         $Charge->save();
-        return redirect(route('promotions.index'))->with('status','تم ايقاف الكود بنجاح');
+        return redirect(route('charge.index'))->with('status','تم تفعيل الكود بنجاح');
     }
 
 }

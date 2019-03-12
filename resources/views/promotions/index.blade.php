@@ -38,12 +38,12 @@
                     <td> {{$Charge->value}} </td>
                     <td>
                         @if($Charge->status== \App\Charge::EXPIRED)
-                            <form action="{{url('/adminpanel/Charges/'.$Charge->id.'/activate')}}" method="post">
+                            <form action="{{url('/adminpanel/charge/'.$Charge->id.'/activate')}}" method="post">
                                 @csrf
                                 <button type="submit" class="btn green"> تفعيل </button>
                             </form>
                         @else
-                        <form action="{{url('/adminpanel/charges/'.$Charge->id.'/deactivate')}}" method="post">
+                        <form action="{{url('/adminpanel/charge/'.$Charge->id.'/deactivate')}}" method="post">
                             @csrf
                             <button type="submit" class="btn "> الغاء التفعيل </button>
                         </form>

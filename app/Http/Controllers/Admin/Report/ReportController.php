@@ -20,7 +20,7 @@ class ReportController extends Controller
     public function index()
     {
        $this->data['orderpermonth'] =  $this->ordersNumberperMonth(date('Y'));
-       $this->data['income'] =  $this->incomePerMonth(date('Y'));
+//       $this->data['income'] =  $this->incomePerMonth(date('Y'));
 
         return view("reports.index",$this->data);
     }
@@ -117,23 +117,21 @@ class ReportController extends Controller
             else
                 $buar[$i] = 0;
         }
-
         return $buar;
 
     }
-    private function incomePerMonth($year)
-    {
-        $income = [];
-          $data = DB::table('requests')
-                    ->select(DB::raw('sum(subtotal) as total,MONTH(created_at) as month'))
-              ->groupBy('created_at')->get();
-
-          foreach ($data as $key=>$value)
-          {
-              $income[$value->month] = $value->total;
-          }
-          return $income;
-    }
+//    private function incomePerMonth($year)
+//    {
+//        $income = [];
+//          $data = DB::table('requests')
+//                    ->select(DB::raw('sum(subtotal) as total,MONTH(created_at) as month'))
+//              ->groupBy('created_at')->get();
+//          foreach ($data as $key=>$value)
+//          {
+//              $income[$value->month] = $value->total;
+//          }
+//          return $income;
+//    }
 
 
 

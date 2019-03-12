@@ -45,10 +45,10 @@ class LoginController extends ApiController
         return 'phone';
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        Auth::logout();
-        return redirect(url('adminpanel/login'));
+       Auth::logout();
+        return redirect("/login");
     }
 
 

@@ -18,7 +18,7 @@ class CreateChargesTable extends Migration
             $table->string('name');
             $table->string('code')->nullable();
             $table->string('count')->nullable();
-            $table->string('status')->default(\App\Promotion::EXPIRED);
+            $table->string('status')->default(\App\Charge::EXPIRED);
             $table->string('value')->nullable();
             $table->timestamps();
         });
