@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Category;
 use App\Category;
+use App\Photo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use File;
@@ -43,18 +44,26 @@ class CategoryController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:190',
             'description' => 'required|string',
+            'img' => 'required|image',
         ]);
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
-//        dd($request->all());
+
 
         $category = Category::create([
             'name' => $request->name,
             'desc' => $request->description,
         ]);
+
+        $id_photo = new Photo();
+        $id_photo->name = 'صورة السيارة';
+        $id_photo->path = $request->img->store('');
+        $id_photo->imageable_id = $category->id;
+        $id_photo->imageable_type = 'App\Category';
+        $id_photo->save();
         return redirect(route('categories.index'));
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Order;
 
 use App\Order;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 
@@ -15,7 +16,7 @@ class OrderController extends ApiController
      */
     public function index()
     {
-        $orders = Order::where('status','=',Order::NEW)->get();
+        $orders = Order::where('status','=',Order::NEW)->with("client")->get();
         return $this->showAll('orders',$orders);
     }
 
@@ -84,9 +85,15 @@ class OrderController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Order $order)
     {
-        //
+        $driver = User::where("api_token",$request->api_token)->first();
+        if ($driver->role != User::DRIVER)
+                return response()->json(['message'=>"sorry, you are not driver"],404);
+        $order->driver_id = $driver->id;
+        $order->status =Order::BOOKED ;
+        $order->save();
+        return $this->showOne("user",$driver,201);
     }
 
     /**

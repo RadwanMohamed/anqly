@@ -15,8 +15,8 @@ class CategoryController extends ApiController
      */
     public function index()
     {
-        $categories = Category::all();
-        return $this->showAll('categories',$categories);
+        $categories = Category::with('images')->paginate(20);
+        return response()->json($categories,200);
     }
 
     /**

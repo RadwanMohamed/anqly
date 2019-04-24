@@ -56,6 +56,20 @@
                                     </span>
                         @endif
                     </div>
+                    <div class="form-group">
+                        <label>صورة السيارة </label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                               <i class="fa fa-pencil"></i>
+                            </span>
+                            <input type="file" name="img" class="form-control" >
+                        </div>
+                        @if ($errors->has('img'))
+                            <span class="help-block " role="alert">
+                                        <strong class="error">{{ $errors->first('img') }}</strong>
+                                    </span>
+                        @endif
+                    </div>
 
 
 

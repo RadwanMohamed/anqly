@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->integer('balance')->default(0);
             $table->integer('category_id')->unsigned()->nullable();
             $table->string('api_token')->nullable();
-//            $table->rememberToken();
+            $table->string('verify')->nullable();
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories');
         });

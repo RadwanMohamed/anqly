@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
 class User extends Authenticatable
 {
     use Notifiable;
@@ -47,6 +46,10 @@ class User extends Authenticatable
     public static function generateToken()
     {
         return str_random(40);
+    }
+    public static function generateVerificationKey()
+    {
+        return str_random(6);
     }
     public function images()
     {

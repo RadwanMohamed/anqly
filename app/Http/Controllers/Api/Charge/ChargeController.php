@@ -35,12 +35,15 @@ class ChargeController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,User $user)
+    public function store(Request $request)
     {
+        $user = User::where('api_token',$request->api_token)->first();
         $code = Charge::where('code','=',$request->code)->first();
+        if ($code == null)
+            return response()->json(['error'=>"wrong code"],404);
         $user->balance += $code->value;
+        $user->save();
         return $this->showOne('user',$user,200);
-
     }
 
     /**
@@ -75,6 +78,13 @@ class ChargeController extends ApiController
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function balance(Request $request)
+    {
+        $user = User::select("id","name","balance")->where("api_token",$request->api_token)->first();
+        return response()->json($user,200);
+
     }
 
     /**

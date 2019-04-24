@@ -31,4 +31,10 @@ trait ApiResponser
     {
         return $this->successResponse(['data'=>$message],$code);
     }
+    public static function uploadImageUsingUrl($url){
+        $data = file_get_contents($url);
+        $filename = ''.str_random(8) .'_image.jpg';
+        file_put_contents(public_path('images/' . $filename), $data);
+        return $filename;
+    }
 }
