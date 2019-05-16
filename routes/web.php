@@ -44,3 +44,5 @@ Route::get("/districts",function (){
    $districts = \App\District::where("city_id",3)->get();
    return response()->json($districts,200);
 });
+
+Route::get("firebase","FirebaseController@index");
